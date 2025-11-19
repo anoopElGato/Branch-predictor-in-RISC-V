@@ -2,7 +2,35 @@
 
 ## Summary
 
-I've implemented a **complete pipelined RISC-V processor with two-level local branch prediction**. Here's what was created:
+We have implemented a **complete pipelined RISC-V processor with two-level local branch prediction**
+
+---
+
+## Usage:
+### 1. Write the hexa-decimal of the instructions to test in the **INST_MEM.v**. The register numbers, opcodes and other details required to form the instruction are provided in the report:
+<img width="546" height="525" alt="image" src="https://github.com/user-attachments/assets/c311f724-1629-4a9b-86a0-2654398632c0" />
+### 2. Compile the file "Processor_tb_branch_prediction.v" using iverilog using the following command:
+
+* compilation
+
+```sh
+iverilog -o gen-compiled "Processor_tb.v"
+```
+### 3. The above command generates a compile file named as "gen-compile". After compilation we can execute the compiled file using:
+* execution
+
+```sh
+vvp gen-compiled
+```
+
+### 4. Viewing waveform
+
+4.1. The waveform generated from testbench is named as "output_wave.vcd"
+4.2. Use GTKWave to view the waveform file
+
+```sh
+gtkwave output_wave.vcd
+```
 
 ---
 
