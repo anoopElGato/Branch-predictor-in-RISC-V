@@ -12,7 +12,7 @@ We have implemented a **complete pipelined RISC-V processor with two-level local
 
 ### 2. Compile the file "Processor_tb_branch_prediction.v" using iverilog using the following command:
 ```sh
-iverilog -o gen-compiled "Processor_tb.v"
+iverilog -o gen-compiled "Processor_tb_branch_prediction.v"
 ```
 ### 3. The above command generates a compile file named as "gen-compile". After compilation we can execute the compiled file using:
 ```sh
