@@ -6,7 +6,7 @@ I've implemented a **complete pipelined RISC-V processor with two-level local br
 
 ---
 
-## New Modules (7 files)
+## New Modules:
 
 ### 1. **BRANCH_HISTORY_TABLE.v**
 - Tracks last 4 outcomes for each branch PC
