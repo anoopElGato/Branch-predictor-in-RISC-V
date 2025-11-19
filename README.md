@@ -20,8 +20,9 @@ vvp gen-compiled
 ```
 
 ### 4. Viewing waveform
-4.1. The waveform generated from testbench is named as "output_wave.vcd"
-4.2. Use GTKWave to view the waveform file
+4.1. The waveform generated from testbench is named as "output_wave.vcd".
+
+4.2. Use GTKWave to view the waveform file.
 
 ```sh
 gtkwave output_wave.vcd
