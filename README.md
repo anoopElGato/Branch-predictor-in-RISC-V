@@ -7,8 +7,7 @@ We have implemented a **complete pipelined RISC-V processor with two-level local
 ---
 
 ## Usage:
-### 1. Write the hexa-decimal of the instructions to test in the **INST_MEM.v**.
-The permitted instructions, register numbers, opcodes and other details required to form the instructions are provided below:
+### 1. Write the hexa-decimal of the instructions to test in the **INST_MEM.v**. The permitted instructions, register numbers, opcodes and other details required to form the instructions are provided in the [report](https://drive.google.com/file/d/1pdev6YN4szFv68vEZgUgF4e3U4U_iRr-/view?usp=sharing):
 <img width="546" height="525" alt="image" src="https://github.com/user-attachments/assets/c311f724-1629-4a9b-86a0-2654398632c0" />
 
 ### 2. Compile the file "Processor_tb_branch_prediction.v" using iverilog using the following command:
@@ -28,8 +27,6 @@ vvp gen-compiled
 ```sh
 gtkwave output_wave.vcd
 ```
-
----
 
 ## New Modules:
 
@@ -218,76 +215,6 @@ output [2:0] branch_type   // BEQ, BNE, BLT, BGE, BLTU, BGEU
 
 ---
 
-## Usage Instructions
-
-### 1. Simulation Setup
-```verilog
-module testbench;
-    reg clock, reset;
-    wire zero;
-    wire [31:0] debug_pc;
-    wire debug_misprediction;
-    
-    PROCESSOR_WITH_BRANCH_PREDICTION proc(
-        .clock(clock),
-        .reset(reset),
-        .zero(zero),
-        .debug_pc(debug_pc),
-        .debug_misprediction(debug_misprediction)
-    );
-    
-    // Clock generation
-    initial clock = 0;
-    always #5 clock = ~clock;
-    
-    // Reset sequence
-    initial begin
-        reset = 1;
-        #10 reset = 0;
-        #1000 $finish;
-    end
-    
-    // Monitor mispredictions
-    always @(posedge clock) begin
-        if (debug_misprediction)
-            $display("Misprediction at PC=%h", debug_pc);
-    end
-endmodule
-```
-
-### 2. Expected Output
-```
-Time 0: Reset
-Time 10: Start execution
-Cycle 1-5: Pipeline fills
-Cycle 6+: Loop executes
-  - First few BNE: Mispredictions
-  - After learning: Correct predictions
-Cycle 70+: Loop exits
-  - BNE not taken: Misprediction (if predictor learned "taken")
-Cycle 75+: Final BEQ
-  - Likely mispredicted (only executed once)
-```
-
-### 3. Monitoring Predictor Accuracy
-```verilog
-reg [31:0] total_branches = 0;
-reg [31:0] mispredictions = 0;
-
-always @(posedge clock) begin
-    if (idex_is_branch) begin
-        total_branches <= total_branches + 1;
-        if (debug_misprediction)
-            mispredictions <= mispredictions + 1;
-    end
-end
-
-// Calculate accuracy
-wire [31:0] accuracy = ((total_branches - mispredictions) * 100) / total_branches;
-```
-
----
-
 ## Design Decisions & Trade-offs
 
 ### 1. Prediction in IF Stage
@@ -325,19 +252,6 @@ wire [31:0] accuracy = ((total_branches - mispredictions) * 100) / total_branche
 
 **Total:** ~4.5KB predictor storage
 
----
-
-## Future Enhancements
-
-1. **Global Branch History**: Track all branches, not just local
-2. **Tournament Predictor**: Combine multiple predictors
-3. **Return Address Stack**: For function calls
-4. **Loop Predictor**: Detect and optimize loop branches
-5. **Confidence Counters**: Track prediction confidence
-6. **Branch Target Cache**: Larger, set-associative BTB
-
----
-
 ## Files Summary
 
 | File | Lines | Purpose |
@@ -353,22 +267,3 @@ wire [31:0] accuracy = ((total_branches - mispredictions) * 100) / total_branche
 | INST_MEM_BRANCH_TEST.v | 150 | Test program |
 
 **Total: ~1060 lines of new/modified Verilog code**
-
----
-
-## Verification Checklist
-
-- [x] All modules compile without errors
-- [x] BHT correctly tracks branch history
-- [x] PHT counters update properly (00→01→10→11)
-- [x] BTB stores and retrieves targets correctly
-- [x] Branch comparator handles all 6 conditions
-- [x] Flush mechanism clears pipeline on misprediction
-- [x] Predictor learns from branch outcomes
-- [x] Test program executes correctly
-- [x] Forwarding still works with branches
-- [x] No deadlocks or stalls
-
----
-
-The implementation is complete and ready for simulation!
