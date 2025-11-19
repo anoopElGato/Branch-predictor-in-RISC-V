@@ -7,7 +7,8 @@ We have implemented a **complete pipelined RISC-V processor with two-level local
 ---
 
 ## Usage:
-### 1. Write the hexa-decimal of the instructions to test in the **INST_MEM.v**. The register numbers, opcodes and other details required to form the instruction are provided in the report:
+### 1. Write the hexa-decimal of the instructions to test in the **INST_MEM.v**.
+The permitted instructions, register numbers, opcodes and other details required to form the instructions are provided below:
 <img width="546" height="525" alt="image" src="https://github.com/user-attachments/assets/c311f724-1629-4a9b-86a0-2654398632c0" />
 
 ### 2. Compile the file "Processor_tb_branch_prediction.v" using iverilog using the following command:
