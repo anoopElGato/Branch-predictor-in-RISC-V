@@ -34,12 +34,12 @@ I've implemented a **complete pipelined RISC-V processor with two-level local br
   - BLT, BGE (signed comparison)
   - BLTU, BGEU (unsigned comparison)
 
-### 6. **CONTROL_WITH_BRANCH.v**
+### 6. **CONTROL.v**
 - Extended control unit supporting B-type instructions
 - Outputs: `is_branch`, `branch_type`
 - Handles opcodes: R, I, S, B types
 
-### 7. **IFU_WITH_PREDICTION.v**
+### 7. **IFU.v**
 - Modified IFU with prediction support
 - PC update logic:
   ```
